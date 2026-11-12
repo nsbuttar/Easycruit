@@ -1,5 +1,6 @@
 import "server-only";
 import type { ApiErrorBody, ApiErrorCode } from "@omniprofile/shared";
+import { connection } from "next/server";
 import { AiError } from "@/lib/ai/client";
 import { ConfigError } from "@/lib/env";
 import { authenticateExtension } from "@/lib/extension-auth";
@@ -44,6 +45,9 @@ export function extensionRoute(
   handler: (request: Request, userId: string) => Promise<Response>,
 ): (request: Request) => Promise<Response> {
   return async (request) => {
+    // Opt out of prerendering before the try block, so the framework's
+    // bail-out signal is never mistaken for a handler error.
+    await connection();
     try {
       const userId = await authenticateExtension(request);
       if (!userId) return apiError("unauthenticated", "Connect the extension to your OmniProfile account.");
