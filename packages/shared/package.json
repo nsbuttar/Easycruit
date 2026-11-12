@@ -9,12 +9,14 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test src/shared.test.ts"
   },
   "dependencies": {
     "zod": "^4"
   },
   "devDependencies": {
+    "@types/node": "^22.20.5",
     "typescript": "^5"
   }
 }
