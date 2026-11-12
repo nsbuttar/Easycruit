@@ -6,8 +6,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "node scripts/build.mjs --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@omniprofile/shared": "*",

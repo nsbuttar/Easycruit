@@ -19,9 +19,10 @@ export const ATS_PLATFORMS = [
   { id: "taleo", name: "Taleo", hostSuffixes: ["taleo.net"] },
 ] as const satisfies readonly AtsPlatform[];
 
-export type AtsId = (typeof ATS_PLATFORMS)[number]["id"];
+export type SupportedAts = (typeof ATS_PLATFORMS)[number];
+export type AtsId = SupportedAts["id"];
 
-export function detectAts(url: string): AtsPlatform | null {
+export function detectAts(url: string): SupportedAts | null {
   let host: string;
   try {
     host = new URL(url).hostname.toLowerCase();
@@ -30,7 +31,7 @@ export function detectAts(url: string): AtsPlatform | null {
   }
   return (
     ATS_PLATFORMS.find((platform) =>
-      platform.hostSuffixes.some((suffix) => host === suffix || host.endsWith(`.${suffix}`)),
+      platform.hostSuffixes.some((suffix: string) => host === suffix || host.endsWith(`.${suffix}`)),
     ) ?? null
   );
 }

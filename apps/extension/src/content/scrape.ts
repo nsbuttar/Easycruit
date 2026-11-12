@@ -1,4 +1,4 @@
-import { MAX_FIELDS, MAX_OPTIONS, type FieldDescriptor, type FieldKind } from "@omniprofile/shared";
+import { MAX_FIELD_TEXT, MAX_FIELDS, MAX_OPTIONS, type FieldDescriptor, type FieldKind } from "@omniprofile/shared";
 
 export type FormControl = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
@@ -27,10 +27,13 @@ const SKIPPED_INPUT_TYPES = new Set([
   "color",
 ]);
 
+/** Mirrors the server's normalisation so option labels round-trip byte-for-byte. */
 const clean = (text: string | null | undefined): string =>
   (text ?? "")
     .replace(/\s+/g, " ")
     .replace(/\s*(\*|\(required\))\s*$/i, "")
+    .trim()
+    .slice(0, MAX_FIELD_TEXT)
     .trim();
 
 function hasBox(element: Element): boolean {

@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "OmniProfile",
+  "description": "Auto-fill job applications from your OmniProfile vault.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "116",
+  "action": {
+    "default_title": "OmniProfile",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://myworkdayjobs.com/*",
+        "https://*.myworkdayjobs.com/*",
+        "https://myworkdaysite.com/*",
+        "https://*.myworkdaysite.com/*",
+        "https://greenhouse.io/*",
+        "https://*.greenhouse.io/*",
+        "https://lever.co/*",
+        "https://*.lever.co/*",
+        "https://taleo.net/*",
+        "https://*.taleo.net/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

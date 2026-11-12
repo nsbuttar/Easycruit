@@ -1,17 +1,10 @@
 import { z } from "zod";
-
-/** Limits that bound what a page can make us send to the mapping model. */
-export const MAX_FIELDS = 120;
-export const MAX_OPTIONS = 60;
-const MAX_TEXT = 300;
-
-/** Minimum model confidence for a value to be injected into the page. */
-export const CONFIDENCE_THRESHOLD = 0.7;
+import { CONFIDENCE_THRESHOLD, MAX_FIELD_TEXT, MAX_FIELDS, MAX_OPTIONS } from "./limits.ts";
 
 const clipped = z
   .string()
   .catch("")
-  .transform((value) => value.replace(/\s+/g, " ").trim().slice(0, MAX_TEXT));
+  .transform((value) => value.replace(/\s+/g, " ").trim().slice(0, MAX_FIELD_TEXT));
 
 export const fieldKindSchema = z.enum([
   "text",
